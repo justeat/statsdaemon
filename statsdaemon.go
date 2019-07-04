@@ -55,6 +55,7 @@ type StatsDaemon struct {
 	listen_addr   string
 	admin_addr    string
 	graphite_addr string
+	prometheus_addr string
 }
 
 func New(instance string, formatter out.Formatter, flush_rates, flush_counts bool, pct out.Percentiles, flushInterval, max_unprocessed int, max_timers_per_s uint64, signalchan chan os.Signal) *StatsDaemon {
