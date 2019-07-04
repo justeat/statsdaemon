@@ -139,6 +139,9 @@ func lexModifierSep(l *lexer) stateFn {
 // lex the sample rate
 func lexSampleRate(l *lexer) stateFn {
 	b := l.next()
+    if b == '#' {
+        return nil
+    }
 	if b != '@' {
 		l.err = errInvalidSampling
 	}

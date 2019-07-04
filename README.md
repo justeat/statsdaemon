@@ -129,6 +129,7 @@ and customizing the prefixes as shown below.
 listen_addr = ":8125"
 admin_addr = ":8126"
 graphite_addr = "127.0.0.1:2003"
+prometheus_addr = ":9091"
 flush_interval = 60
 
 legacy_namespace = true

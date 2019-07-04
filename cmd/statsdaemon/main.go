@@ -38,8 +38,9 @@ var (
 	admin_addr    = flag.String("admin_addr", ":8126", "listener address for admin port")
 	profile_addr  = flag.String("profile_addr", "", "listener address for profiler")
 	graphite_addr = flag.String("graphite_addr", "127.0.0.1:2003", "graphite carbon-in url")
+    prometheus_addr = flag.String("prometheus_addr", ":9091", "where to expose metrics in prometheus format")
 	flushInterval = flag.Int("flush_interval", 10, "flush interval in seconds")
-	processes     = flag.Int("processes", 4, "number of processes to use")
+	processes     = flag.Int("processes", 2, "number of processes to use")
 
 	instance = flag.String("instance", "$HOST", "instance name, defaults to short hostname if not set")
 
@@ -221,5 +222,5 @@ func main() {
 			}
 		}()
 	}
-	daemon.Run(*listen_addr, *admin_addr, *graphite_addr)
+	daemon.Run(*listen_addr, *admin_addr, *graphite_addr, *prometheus_addr)
 }
