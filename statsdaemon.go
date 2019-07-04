@@ -83,13 +83,13 @@ func (s *StatsDaemon) Run(listen_addr, admin_addr, graphite_addr, prometheus_add
 	s.Clock = clock.New()
 	s.submitFunc = s.GraphiteQueue
 	s.graphiteQueue = make(chan []byte, 1000)
-    s.prometheusQueue = make(chan []byte, 1000)
-    s.pms = ""
+	s.prometheusQueue = make(chan []byte, 1000)
+	s.pms = ""
 
 	s.listen_addr = listen_addr
 	s.admin_addr = admin_addr
 	s.graphite_addr = graphite_addr
-    s.prometheus_addr = prometheus_addr
+	s.prometheus_addr = prometheus_addr
 
 	log.Infof("statsdaemon instance '%s' starting", s.instance)
 	output := &out.Output{
@@ -102,8 +102,8 @@ func (s *StatsDaemon) Run(listen_addr, admin_addr, graphite_addr, prometheus_add
 	go s.adminListener()                                              // tcp admin_addr to handle requests
 	go s.metricStatsMonitor()                                         // handles requests fired by telnet api
 	go s.graphiteWriter()                                             // writes to graphite in the background
-    go s.prometheusListener()
-    go s.prometheusWriter()
+	go s.prometheusListener()
+	go s.prometheusWriter()
 	s.metricsMonitor()                                                // takes data from s.Metrics and puts them in the guage/timers/etc objects. pointers guarded by select. also listens for signals.
 }
 
