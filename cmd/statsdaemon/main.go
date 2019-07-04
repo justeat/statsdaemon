@@ -38,7 +38,7 @@ var (
 	admin_addr    = flag.String("admin_addr", ":8126", "listener address for admin port")
 	profile_addr  = flag.String("profile_addr", "", "listener address for profiler")
 	graphite_addr = flag.String("graphite_addr", "127.0.0.1:2003", "graphite carbon-in url")
-    prometheus_addr = flag.String("prometheus_addr", ":9091", "where to expose metrics in prometheus format")
+	prometheus_addr = flag.String("prometheus_addr", ":9091", "prometheus listen address")
 	flushInterval = flag.Int("flush_interval", 10, "flush interval in seconds")
 	processes     = flag.Int("processes", 2, "number of processes to use")
 
