@@ -51,6 +51,7 @@ type StatsDaemon struct {
 	graphiteQueue chan []byte
 	prometheusQueue chan []byte
 	pms string
+	pmb bool
 
 	listen_addr   string
 	admin_addr    string
@@ -85,6 +86,7 @@ func (s *StatsDaemon) Run(listen_addr, admin_addr, graphite_addr, prometheus_add
 	s.graphiteQueue = make(chan []byte, 1000)
 	s.prometheusQueue = make(chan []byte, 1000)
 	s.pms = ""
+	s.pmb = false
 
 	s.listen_addr = listen_addr
 	s.admin_addr = admin_addr
@@ -312,6 +314,9 @@ func (s *StatsDaemon) GraphiteQueue(c *out.Counters, g *out.Gauges, t *out.Timer
 
 func (s *StatsDaemon) prometheusWriter() {
     for buf := range s.prometheusQueue {
+	if !s.pmb {
+	   continue
+	}
         in_timer := false
         for _, line := range bytes.Split(buf, []byte("\n")) {
             if len(line) == 0 {
@@ -547,6 +552,7 @@ func (s *StatsDaemon) adminListener() {
 
 func (s *StatsDaemon) prometheusListener() {
     http.HandleFunc("/metrics", func(w http.ResponseWriter, r *http.Request) {
+	s.pmb = true
         w.Write([]byte(s.pms))
     })
     if err := http.ListenAndServe(s.prometheus_addr, nil); err != nil {
