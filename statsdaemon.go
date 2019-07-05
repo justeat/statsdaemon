@@ -51,7 +51,6 @@ type StatsDaemon struct {
 	submitFunc    SubmitFunc
 	graphiteQueue chan []byte
 	prometheusQueue chan []byte
-	pms string
 	pmb bool
 
 	listen_addr   string
@@ -86,7 +85,6 @@ func (s *StatsDaemon) Run(listen_addr, admin_addr, graphite_addr, prometheus_add
 	s.submitFunc = s.GraphiteQueue
 	s.graphiteQueue = make(chan []byte, 1000)
 	s.prometheusQueue = make(chan []byte, 1000)
-	s.pms = ""
 	s.pmb = false
 
 	s.listen_addr = listen_addr
