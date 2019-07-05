@@ -358,7 +358,7 @@ func (s *StatsDaemon) prometheusWriter() {
 		    log.Debugf("Wrote %d stats to metrics file", n)
                 }
             } else {
-		log.Warnf("LINE %s\n", line)
+		log.Debugf("LINE %s is invalid\n", line)
 	    }
         }
         buf = buf[:0]
