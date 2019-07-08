@@ -320,7 +320,7 @@ func (s *StatsDaemon) prometheusWriter() {
 	if !s.pmb {
 	   continue
 	}
-	file,_ := os.OpenFile("/tmp/prometheus_metrics", os.O_APPEND|os.O_WRONLY, 0666)
+	file,_ := os.OpenFile(os.TempDir()+string(os.PathSeparator)+"prometheus_metrics", os.O_APPEND|os.O_WRONLY, 0666)
 	defer file.Close()
         in_timer := false
         for _, line := range bytes.Split(buf, []byte("\n")) {
@@ -563,7 +563,7 @@ func (s *StatsDaemon) adminListener() {
 func (s *StatsDaemon) prometheusListener() {
     http.HandleFunc("/metrics", func(w http.ResponseWriter, r *http.Request) {
 	s.pmb = true
-	file, _ := os.OpenFile("/tmp/prometheus_metrics", os.O_RDONLY, 0666)
+	file, _ := os.OpenFile(os.TempDir()+string(os.PathSeparator)+"prometheus_metrics", os.O_RDONLY, 0666)
 	b, _ := ioutil.ReadAll(file)
 	file.Close()
         w.Write([]byte(b))
